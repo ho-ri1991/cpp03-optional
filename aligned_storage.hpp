@@ -3,6 +3,7 @@
 
 #include "alignment_of.hpp"
 #include "type_with_alignment.hpp"
+#include "static_assert.hpp"
 
 namespace my {
 namespace type_traits {
@@ -19,7 +20,7 @@ namespace type_traits {
     void* address() { return &dummy_.data[0]; }
     const void* address() const { return &dummy_.data[0]; }
     
-    // TODO static assert on the storage is aligned property
+    STATIC_ASSERT(alignment_of<dummy_u>::value % Alignment == 0, aligned_storage_has_not_aligned_properly);
   };
 
 }}
