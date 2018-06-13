@@ -24,8 +24,16 @@ int main() {
   std::cout << static_cast<bool>(oi) << std::endl;
   std::cout << *oi << std::endl;
 //  my::optional<Test> ot((Test()));
-  my::optional<Test1> ot1((Test1()));
-  std::cout << static_cast<bool>(ot1) << std::endl;
+  {
+    my::optional<Test1> ot1((Test1()));
+    std::cout << static_cast<bool>(ot1) << std::endl;
+  }
+
+  my::optional<double> od(my::nullopt);
+  std::cout << static_cast<bool>(od) << std::endl;
+  od = 1.5;
+  std::cout << static_cast<bool>(od) << std::endl;
+  std::cout << *od << std::endl;
   return 0;
 }
 

@@ -64,6 +64,14 @@ namespace my
     bool is_constructed() const MY_NOEXCEPT { return data; }
   };
 
+  struct nullopt_t
+  {
+    struct nullopt_construct {};
+    nullopt_t(nullopt_construct){}
+  };
+
+  extern nullopt_t nullopt;
+
   template <class T, template <class> class StoragePolicy = LocalStoragePolicy>
   class optional: private StoragePolicy<T>
   {
@@ -124,7 +132,8 @@ namespace my
     }
 
   public:
-    optional() {}
+    optional() MY_NOEXCEPT {}
+    optional(nullopt_t) MY_NOEXCEPT {}
     template <class U>
     optional(const U& val): StoragePolicy<T>(val) {}
     optional(const optional& other)
@@ -135,6 +144,11 @@ namespace my
     optional(const optional<U, OtherStoragePolicy>& other)
     {
       if (other) this->construct(*other);
+    }
+    optional& operator=(nullopt_t) MY_NOEXCEPT
+    {
+      this->reset();
+      return *this;
     }
     template <class U>
     optional& operator=(const U& val)
