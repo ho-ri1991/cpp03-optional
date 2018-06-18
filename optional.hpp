@@ -272,9 +272,9 @@ namespace my
   bool operator>=(nullopt_t, const optional<T, Storage>& x) MY_NOEXCEPT { return !static_cast<bool>(x); }
 
   template <class T, class U, template <class> class Storage>
-  bool operator==(const optional<T, Storage>& x, const U& v) { return x->has_value() ? *x == v : false; }
+  bool operator==(const optional<T, Storage>& x, const U& v) { return static_cast<bool>(x) ? *x == v : false; }
   template <class T, class U, template <class> class Storage>
-  bool operator==(const U& v, const optional<T, Storage>& x) { return x->has_value() ? v == *x : false; }
+  bool operator==(const U& v, const optional<T, Storage>& x) { return static_cast<bool>(x) ? v == *x : false; }
   template <class T, class U, template <class> class Storage>
   bool operator!=(const optional<T, Storage>& x, const U& v) { return !(x == v); }
   template <class T, class U, template <class> class Storage>

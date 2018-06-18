@@ -121,6 +121,45 @@ BOOST_AUTO_TEST_CASE(my_optional) {
   BOOST_CHECK_EQUAL(CountTest::live_count, 0);
   ordinary_access_assign_tests<CountTest, LocalStorage>(CountTest(42), CountTest(77));
   BOOST_CHECK_EQUAL(CountTest::live_count, 0);
+
+  optional<int> opt1(1);
+  optional<int> opt1_(1);
+  optional<int> opt2(2);
+  optional<int> opt_null;
+  // opt vs opt comparator
+  BOOST_CHECK(opt1 == opt1_);
+  BOOST_CHECK(opt1 != opt2);
+  BOOST_CHECK(opt1 != nullopt);
+  BOOST_CHECK(opt1 < opt2);
+  BOOST_CHECK(opt2 > opt1);
+  BOOST_CHECK(opt1 <= opt2);
+  BOOST_CHECK(opt2 >= opt1);
+  // opt vs nullopt comparator
+  BOOST_CHECK(opt_null == nullopt);
+  BOOST_CHECK(nullopt == opt_null);
+  BOOST_CHECK(opt1 != nullopt);
+  BOOST_CHECK(nullopt != opt1);
+  BOOST_CHECK(!(opt1 < nullopt));
+  BOOST_CHECK(nullopt < opt1);
+  BOOST_CHECK(!(opt1 <= nullopt));
+  BOOST_CHECK(nullopt <= opt1);
+  BOOST_CHECK(!(opt1 > nullopt));
+  BOOST_CHECK(!(nullopt > opt1));
+  BOOST_CHECK(opt1 >= nullopt);
+  BOOST_CHECK(!(nullopt >= opt1));
+  // opt vs value comparator
+  BOOST_CHECK(opt1 == 1);
+  BOOST_CHECK(1 == opt1);
+  BOOST_CHECK(opt1 != 2);
+  BOOST_CHECK(2 != opt1);
+  BOOST_CHECK(opt1 < 2);
+  BOOST_CHECK(0 < opt1);
+  BOOST_CHECK(opt1 <= 2);
+  BOOST_CHECK(0 <= opt1);
+  BOOST_CHECK(opt1 > 0);
+  BOOST_CHECK(2 > opt1);
+  BOOST_CHECK(opt1 >= 0);
+  BOOST_CHECK(2 >= opt1);
 }
 BOOST_AUTO_TEST_SUITE_END()
 
