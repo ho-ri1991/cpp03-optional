@@ -1,7 +1,7 @@
 #ifndef OPTIONAL_HPP
 #define OPTIONAL_HPP
 
-#include <stdexcept>
+#include <exception>
 #include <cassert>
 #include "aligned_storage.hpp"
 
@@ -72,6 +72,11 @@ namespace my
 
   extern nullopt_t nullopt;
 
+  class bad_optional_access: public std::exception
+  {
+    virtual const char* what() const throw() { return "bad_optional_access"; }
+  };
+
   template <class T, template <class> class Storage = LocalStorage>
   class optional
   {
@@ -103,12 +108,12 @@ namespace my
     T& value()
     {
       if (this->has_value()) return *(*this);
-      else throw std::runtime_error("null optional dereferenced");
+      else throw bad_optional_access();
     }
     const T& value() const
     {
       if (this->has_value()) return *(*this);
-      else throw std::runtime_error("null optional dereferenced");
+      else throw bad_optional_access();
     }
     template <class U>
     T value_or(const U& val) const { return this->has_value() ? *(*this) : val; }
