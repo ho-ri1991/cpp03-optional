@@ -208,8 +208,8 @@ namespace my
   template <class T1, class T2, template <class> class Storage1, template <class> class Storage2>
   bool operator==(const optional<T1, Storage1>& x, const optional<T2, Storage2>& y)
   {
-    if (x->has_value() != y->has_value()) return false;
-    else if (x->has_value()) return true;
+    if (x.has_value() != y.has_value()) return false;
+    else if (!x.has_value()) return true;
     else return *x == *y;
   }
   template <class T1, class T2, template <class> class Storage1, template <class> class Storage2>
@@ -280,21 +280,21 @@ namespace my
   template <class T, class U, template <class> class Storage>
   bool operator!=(const U& v, const optional<T, Storage>& x) { return !(v == x); }
   template <class T, class U, template <class> class Storage>
-  bool operator<(const optional<T, Storage>& x, const U& v) { return x->has_value() ? *x < v : true; }
+  bool operator<(const optional<T, Storage>& x, const U& v) { return static_cast<bool>(x) ? *x < v : true; }
   template <class T, class U, template <class> class Storage>
-  bool operator<(const U& v, const optional<T, Storage>& x) { return x->has_value() ? v < *x : false; }
+  bool operator<(const U& v, const optional<T, Storage>& x) { return static_cast<bool>(x) ? v < *x : false; }
   template <class T, class U, template <class> class Storage>
-  bool operator<=(const optional<T, Storage>& x, const U& v) { return x->has_value() ? *x <= v : true; }
+  bool operator<=(const optional<T, Storage>& x, const U& v) { return static_cast<bool>(x) ? *x <= v : true; }
   template <class T, class U, template <class> class Storage>
-  bool operator<=(const U& v, const optional<T, Storage>& x) { return x->has_value() ? v <= *x : false; }
+  bool operator<=(const U& v, const optional<T, Storage>& x) { return static_cast<bool>(x) ? v <= *x : false; }
   template <class T, class U, template <class> class Storage>
-  bool operator>(const optional<T, Storage>& x, const U& v) { return x->has_value() ? *x > v : false; }
+  bool operator>(const optional<T, Storage>& x, const U& v) { return static_cast<bool>(x) ? *x > v : false; }
   template <class T, class U, template <class> class Storage>
-  bool operator>(const U& v, const optional<T, Storage>& x) { return x->has_value() ? v > *x : true; }
+  bool operator>(const U& v, const optional<T, Storage>& x) { return static_cast<bool>(x) ? v > *x : true; }
   template <class T, class U, template <class> class Storage>
-  bool operator>=(const optional<T, Storage>& x, const U& v) { return x->has_value() ? *x >= v : false; }
+  bool operator>=(const optional<T, Storage>& x, const U& v) { return static_cast<bool>(x) ? *x >= v : false; }
   template <class T, class U, template <class> class Storage>
-  bool operator>=(const U& v, const optional<T, Storage>& x) { return x->has_value() ? v >= *x : true; }
+  bool operator>=(const U& v, const optional<T, Storage>& x) { return static_cast<bool>(x) ? v >= *x : true; }
 }
 
 #endif
