@@ -3,6 +3,7 @@
 
 #include <exception>
 #include <cassert>
+#include <new>
 #include "aligned_storage.hpp"
 
 #define MY_NOEXCEPT throw()

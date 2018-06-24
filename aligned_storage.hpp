@@ -20,7 +20,7 @@ namespace type_traits {
     void* address() { return &dummy_.data[0]; }
     const void* address() const { return &dummy_.data[0]; }
     
-    STATIC_ASSERT(alignment_of<dummy_u>::value % Alignment == 0, aligned_storage_has_not_aligned_properly);
+    STATIC_ASSERT(Alignment % alignment_of<dummy_u>::value == 0, aligned_storage_has_not_aligned_properly);
   };
 
 }}
